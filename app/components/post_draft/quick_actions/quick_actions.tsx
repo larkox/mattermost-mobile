@@ -1,6 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
+import {PasteInputRef} from '@mattermost/react-native-paste-input';
 import React from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 
@@ -19,6 +20,7 @@ type Props = {
     value: string;
     updateValue: (value: string) => void;
     addFiles: (file: FileInfo[]) => void;
+    inputRef: React.MutableRefObject<PasteInputRef | undefined>;
 }
 
 const style = StyleSheet.create({
@@ -47,6 +49,7 @@ export default function QuickActions({
     maxFileCount,
     updateValue,
     addFiles,
+    inputRef,
 }: Props) {
     const atDisabled = value[value.length - 1] === '@';
     const slashDisabled = value.length > 0;
@@ -76,6 +79,7 @@ export default function QuickActions({
                 inputType='at'
                 onTextChange={updateValue}
                 value={value}
+                inputRef={inputRef}
             />
             <InputAction
                 testID={slashInputActionTestID}
@@ -83,6 +87,7 @@ export default function QuickActions({
                 inputType='slash'
                 onTextChange={updateValue}
                 value={''} // Only enabled when value == ''
+                inputRef={inputRef}
             />
             <FileAction
                 testID={fileActionTestID}

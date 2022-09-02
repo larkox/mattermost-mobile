@@ -1,6 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
+import {PasteInputRef} from '@mattermost/react-native-paste-input';
 import React, {useCallback} from 'react';
 
 import CompassIcon from '@components/compass_icon';
@@ -15,6 +16,7 @@ type Props = {
     inputType: 'at' | 'slash';
     onTextChange: (value: string) => void;
     value: string;
+    inputRef: React.MutableRefObject<PasteInputRef | undefined>;
 }
 
 const getStyleSheet = makeStyleSheetFromTheme((theme) => {
@@ -36,6 +38,7 @@ export default function InputQuickAction({
     inputType,
     onTextChange,
     value,
+    inputRef,
 }: Props) {
     const theme = useTheme();
     const onPress = useCallback(() => {
@@ -45,6 +48,7 @@ export default function InputQuickAction({
         }
 
         onTextChange(newValue);
+        inputRef.current?.focus();
     }, [value, inputType]);
 
     const actionTestID = disabled ?
